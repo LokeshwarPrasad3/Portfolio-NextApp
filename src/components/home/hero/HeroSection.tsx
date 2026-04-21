@@ -197,6 +197,7 @@ export const HeroSection = () => {
                 animate={{ y: [-20, 20, -20], rotate: [0, 90, 0] }}
                 transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
                 className="absolute -top-12 -right-8 text-yellow-500/50 md:-right-16"
+                style={{ willChange: "transform" }}
               >
                 <svg
                   width="24"
@@ -214,6 +215,7 @@ export const HeroSection = () => {
                 animate={{ y: [20, -20, 20], rotate: [0, -90, 0] }}
                 transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
                 className="absolute top-44 -left-12 text-cyan-500/50 md:-left-16"
+                style={{ willChange: "transform" }}
               >
                 <svg
                   width="32"
@@ -234,7 +236,7 @@ export const HeroSection = () => {
             <motion.div
               animate={{ y: [-10, 10, -10], rotate: [-8, -4, -8] }}
               transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-              style={{ x: moveBack }}
+              style={{ x: moveBack, willChange: "transform" }}
               className="pointer-events-none absolute -top-3 -left-10 z-10 hidden aspect-3/4 w-[200px] overflow-hidden rounded-2xl border border-white/10 shadow-2xl md:block xl:-left-20 xl:w-[160px]"
             >
               <Image
@@ -254,7 +256,7 @@ export const HeroSection = () => {
             <motion.div
               animate={{ y: [10, -10, 10], rotate: [8, 4, 8] }}
               transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-              style={{ x: moveBack }}
+              style={{ x: moveBack, willChange: "transform" }}
               className="pointer-events-none absolute -right-10 -bottom-8 z-10 hidden aspect-3/4 w-[220px] overflow-hidden rounded-2xl border border-white/10 shadow-2xl md:block xl:-right-20 xl:w-[160px]"
             >
               <Image

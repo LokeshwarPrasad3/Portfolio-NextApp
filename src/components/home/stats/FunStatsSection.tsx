@@ -4,14 +4,11 @@ import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 import dynamic from "next/dynamic";
 import { AnalyticsStatCards } from "@/components/analytics/StatCards";
+import { ChartSkeleton } from "@/components/analytics/AnalyticsSkeleton";
 
 const TrafficChart = dynamic(() => import("@/components/analytics/TrafficChart"), {
   ssr: false,
-  loading: () => (
-    <div className="flex h-full w-full animate-pulse items-center justify-center rounded-xl border border-slate-800 bg-slate-900/50 p-6 text-slate-400 shadow-xl backdrop-blur-sm">
-      Loading Chart Analytics...
-    </div>
-  ),
+  loading: () => <ChartSkeleton />,
 });
 
 export const FunStatsSection = () => {
@@ -43,13 +40,7 @@ export const FunStatsSection = () => {
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
           <div ref={ref} className="order-2 col-span-1 min-h-[350px] lg:order-1 lg:col-span-9">
-            {isInView ? (
-              <TrafficChart />
-            ) : (
-              <div className="flex h-full w-full animate-pulse items-center justify-center rounded-xl border border-slate-800 bg-slate-900/50 p-6 text-slate-400 shadow-xl backdrop-blur-sm">
-                Loading Chart Analytics...
-              </div>
-            )}
+            {isInView ? <TrafficChart /> : <ChartSkeleton />}
           </div>
 
           <div className="order-1 col-span-1 grid grid-cols-1 gap-4 sm:grid-cols-3 lg:order-2 lg:col-span-3 lg:grid-cols-1 lg:gap-6">

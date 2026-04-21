@@ -26,7 +26,7 @@ export const ImageTransition = () => {
   }, []);
 
   return (
-    <div className="relative h-full w-full overflow-hidden rounded-2xl">
+    <div className="relative aspect-3/4 h-full w-full overflow-hidden rounded-2xl">
       <div className="pointer-events-none absolute inset-0 z-20 bg-linear-to-tr from-pink-600/30 via-transparent to-transparent mix-blend-overlay" />
 
       <AnimatePresence mode="popLayout" initial={false}>
@@ -49,6 +49,7 @@ export const ImageTransition = () => {
             sizes="(max-width: 768px) 300px, 350px"
             priority={index === 0}
             fetchPriority={index === 0 ? "high" : "auto"}
+            placeholder="blur"
           />
         </motion.div>
       </AnimatePresence>

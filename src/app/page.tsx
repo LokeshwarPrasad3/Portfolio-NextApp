@@ -1,15 +1,28 @@
 import { HeroSection } from "@/components/home/hero/HeroSection";
 import { StatsSticker } from "@/components/home/hero/StatsSticker";
-import { FunStatsSection } from "@/components/home/stats/FunStatsSection";
-import { ProofSection } from "@/components/home/proof/ProofSection";
-import { WorkSection } from "@/components/home/work/WorkSection";
-import { OneLastThing } from "@/components/home/footer/OneLastThing";
+import dynamic from "next/dynamic";
+import {
+  FunStatsSectionDeferred,
+  SkillsSectionDeferred,
+  ExperienceSectionDeferred,
+  ProjectsSectionDeferred,
+  AchievementsSectionDeferred,
+} from "@/components/home/DeferredSection";
+
+// Below-fold components: lazy-loaded via dynamic import to reduce TBT
+// Code-splitting defers JS parsing/execution off the critical path
+const ProofSection = dynamic(() =>
+  import("@/components/home/proof/ProofSection").then((mod) => ({ default: mod.ProofSection }))
+);
+const WorkSection = dynamic(() =>
+  import("@/components/home/work/WorkSection").then((mod) => ({ default: mod.WorkSection }))
+);
+const OneLastThing = dynamic(() =>
+  import("@/components/home/footer/OneLastThing").then((mod) => ({ default: mod.OneLastThing }))
+);
+
 import { Footer } from "@/components/layouts/Footer";
 import ClickSpark from "@/components/ClickSpark";
-import { SkillsSection } from "@/components/home/skills/SkillsSection";
-import { ProjectsSection } from "@/components/home/projects/ProjectsSection";
-import { ExperienceSection } from "@/components/home/experience/ExperienceSection";
-import { AchievementsSection } from "@/components/home/achievements/AchievementsSection";
 
 export default function Home() {
   return (
@@ -18,11 +31,13 @@ export default function Home() {
         <main className="relative z-10 w-full flex-1">
           <HeroSection />
           <StatsSticker />
-          <FunStatsSection />
-          <SkillsSection />
-          <ExperienceSection />
-          <ProjectsSection />
-          <AchievementsSection />
+          {/* Heavy sections: deferred via client-side wrapper with ssr:false to free main thread */}
+          <FunStatsSectionDeferred />
+          <SkillsSectionDeferred />
+          <ExperienceSectionDeferred />
+          <ProjectsSectionDeferred />
+          <AchievementsSectionDeferred />
+          {/* Lighter sections: lazy-loaded with SSR preserved */}
           <ProofSection />
           <WorkSection />
           {/* <RealityCheckSection /> */}

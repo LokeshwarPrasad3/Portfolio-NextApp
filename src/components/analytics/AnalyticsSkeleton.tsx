@@ -7,7 +7,7 @@ export const ChartSkeleton = () => {
         <Skeleton className="h-6 w-48 bg-slate-800" />
         <Skeleton className="h-4 w-24 bg-slate-800/60" />
       </div>
-      <div className="flex h-[300px] w-full items-end gap-2">
+      <div className="flex h-[250px] w-full items-end gap-2 sm:h-[350px]">
         {/* Simulate bars or area */}
         <Skeleton className="h-[40%] w-full rounded-t bg-slate-800/30" />
         <Skeleton className="h-[60%] w-full rounded-t bg-slate-800/30" />
