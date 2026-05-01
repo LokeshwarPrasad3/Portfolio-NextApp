@@ -74,6 +74,10 @@ const technologies = [
     name: "AWS",
     slug: "aws",
   },
+  {
+    name: "CI/CD",
+    slug: "github",
+  },
 ];
 
 const firstRow = technologies.slice(0, Math.ceil(technologies.length / 2));

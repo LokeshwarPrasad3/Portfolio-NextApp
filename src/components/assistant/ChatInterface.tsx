@@ -94,7 +94,7 @@ const renderMessageContent = (content: string) => {
 };
 
 export function ChatInterface() {
-  const { messages, status, sendMessage } = useChat();
+  const { messages, status, error, sendMessage } = useChat();
 
   const isLoading = status === "submitted" || status === "streaming";
 
@@ -113,7 +113,7 @@ export function ChatInterface() {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [messages, error]);
 
   // Handle Inactivity
   useEffect(() => {
@@ -137,7 +137,7 @@ export function ChatInterface() {
   }, [messages.length]);
 
   const handleSuggestionClick = (prompt: string) => {
-    sendMessage({ id: Date.now().toString(), role: "user", content: prompt } as any);
+    sendMessage({ text: prompt });
   };
 
   return (
@@ -214,13 +214,17 @@ export function ChatInterface() {
                     </div>
                   )}
                   <div className="max-w-full">
-                    {m.parts?.map((part: any, index: number) => {
-                      if (part.type === "text") {
-                        const textPart = part as { type: "text"; text: string };
-                        return <div key={index}>{renderMessageContent(textPart.text)}</div>;
-                      }
-                      return null;
-                    })}
+                    {m.parts && m.parts.length > 0 ? (
+                      m.parts.map((part: any, index: number) => {
+                        if (part.type === "text") {
+                          const textPart = part as { type: "text"; text: string };
+                          return <div key={index}>{renderMessageContent(textPart.text)}</div>;
+                        }
+                        return null;
+                      })
+                    ) : (
+                      <div>{renderMessageContent((m as any).content || "")}</div>
+                    )}
                   </div>
                 </div>
               </motion.div>
@@ -246,6 +250,25 @@ export function ChatInterface() {
                     <div className="h-1.5 w-1.5 animate-bounce rounded-full bg-purple-400"></div>
                   </div>
                 </div>
+              </div>
+            </motion.div>
+          )}
+          {error && (
+            <motion.div
+              key="error-indicator"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mb-4 flex justify-start"
+            >
+              <div className="max-w-[85%] rounded-2xl rounded-bl-sm border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
+                <div className="mb-1 flex items-center gap-2">
+                  <span className="text-xs font-semibold text-red-400">⚠ Connection Issue</span>
+                </div>
+                <p className="text-xs text-red-300/80">
+                  {error.message.includes("429")
+                    ? "Too many messages — please wait a moment before trying again."
+                    : "Something went wrong. Please try sending your message again."}
+                </p>
               </div>
             </motion.div>
           )}
